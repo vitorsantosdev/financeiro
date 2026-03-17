@@ -14,6 +14,19 @@ tipo.addEventListener("change", () => {
     }
 });
 
+// MOSTRAR FORM NOVA TRANSAÇÕES
+const sectionForm = document.querySelector("#form-transacoes")
+const btnNew = document.querySelector("#btn-new")
+const close = document.querySelector("#close")
+
+btnNew.addEventListener("click", () => {
+        sectionForm.classList.remove("hidden");
+})
+
+close.addEventListener("click", () => {
+    sectionForm.classList.add("hidden")
+})
+
 const form = document.querySelector("#form-transactions")
 const inputName = document.querySelector("#inp-name")
 const inputDate = document.querySelector("#inp-date")
@@ -47,6 +60,12 @@ const removeTransaction = id => {
     init()
 }
 
+const clearForm = () => {
+    form.reset()
+    inputDate.value = hoje
+    categoria.classList.add("hidden")
+}
+
 form.addEventListener("submit", event => {
     event.preventDefault()
 
@@ -60,19 +79,16 @@ form.addEventListener("submit", event => {
     }
 
     transactions.push(newTransaction)
-    form.reset()
-    inputDate.value = hoje
-    categoria.classList.add("hidden")
-
+    clearForm()
     renderTransactions()
     saveToLocalStorage()
+
+    sectionForm.classList.add("hidden")
 })
 
 const saveToLocalStorage = () => {
     localStorage.setItem("transactions", JSON.stringify(transactions))
 }
-
-
 
 const renderTransactions = () => {
     const transactionsUL = document.querySelector("#transactions-list")
